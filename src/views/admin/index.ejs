@@ -9,16 +9,27 @@
   <body>
     <%- include('../partials/header') %>
     <main>
-      
-      <h1>Productos</h1>
+      <h1> Listado de productos</h1>
 
-      <p><%= nombre %></p>
-
-      <ul>
-        <% items.forEach(item => { %>
-        <li><%= item.nombre %></li>
-        <% }) %>
-      </ul>
+      <a href="/admin/productos/ceate"> Crear</a>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% productos.forEach(producto => { %> 
+            <td><%= producto.id %></td>
+            <td><%= producto.nombre %</td>
+            <td><%= producto.precio %</td>
+            <td></td>
+            <% }) %>
+        </tbody>
+      </table>
     </main>
     <%- include('../partials/footer') %>
   </body>

@@ -7,12 +7,14 @@ const model = require("../../models/producto");
 
 const index = async (req, res) => {
   try {
-    const productos = awaitmodel.findAll();
+    const productos = await model.findAll();
     console.log(productos);
+    res.render("admin/index", {productos});
   } catch (error) {
     console.log(error);
+    res.status(500).send(error);
   }
-  res.render("Listado de productos");
+  res.send("listado de productos");
 };
 
 const show = (req, res) => {

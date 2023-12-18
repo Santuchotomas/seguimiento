@@ -1,3 +1,11 @@
 h1 {
   color: darkorange;
 }
+table {
+  margin: 1em 0;
+  boder-collape: collapse;
+}
+th,
+td, {
+  border: 1px solid;
+}
