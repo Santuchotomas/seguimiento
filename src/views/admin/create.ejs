@@ -10,7 +10,7 @@
     <%- include('../partials/header') %>
     <main>
       <h1>Crear Productos</h1>
-      <% if (typeof erros != "undefines") { %>
+      <% if (typeof erros != "undefined") { %>
       <ul>
         <% errors.forEach(error => { %>
         <li><%= error.msg %></li>

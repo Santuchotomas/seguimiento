@@ -3,13 +3,16 @@ const sharp = require("sharp");
 
 const { validationResult } = require("express-validator");
 
-const index = (req, res) => {
-  const items = [
-    { nombre: "Item 1" },
-    { nombre: "Item 2" },
-    { nombre: "Item 3" },
-  ];
-  res.render("admin/index", { nombre: "Producto 1", items });
+const model = require("../../models/producto");
+
+const index = async (req, res) => {
+  try {
+    const productos = awaitmodel.findAll();
+    console.log(productos);
+  } catch (error) {
+    console.log(error);
+  }
+  res.render("Listado de productos");
 };
 
 const show = (req, res) => {
@@ -28,10 +31,10 @@ const store = (req, res) => {
   if (!errores.isEmpty()) {
     // Retornar el error al formulario con los errorres
     return res.render("admin/create", {
-       values: req.body,
+      values: req.body,
       errors: errores.array(),
-      });
-    }
+    });
+  }
 
   if (req.file) {
     console.log(req.file, req.file.buffer, req.file.originalname);
