@@ -9,7 +9,7 @@
   <body>
     <%- include('../partials/header') %>
     <main>
-      <h1>Crear Producto</h1>
+      <h1>Editar Producto</h1>
 
       <% if (typeof errors != 'undefined') { %>
       <ul>
@@ -20,7 +20,7 @@
       <% } %>
 
       <form
-        action="/admin/productos"
+        action="/admin/productos/<%= values.id %>?_method=PUT"
         method="post"
         enctype="multipart/form-data"
       >
@@ -49,6 +49,9 @@
           <div>
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" name="imagen" accept="image/*"/>
+            <div>
+            <img width="50" src="/public/uploads/productos/producto_<%= values.id %>.jpg" alt="<%= values.nombre%>"/>
+            </div>
           </div>
           <button type="submit">Guardar</button>
         </div>

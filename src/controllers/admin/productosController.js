@@ -9,7 +9,7 @@ const index = async (req, res) => {
   try {
     const productos = await model.findAll();
     console.log(productos);
-    res.render("admin/index", {productos});
+    res.render("admin/index", { productos });
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
@@ -25,37 +25,92 @@ const create = (req, res) => {
   res.render("admin/create");
 };
 
-const store = (req, res) => {
-  console.log(req.body);
+const store = async (req, res) => {
+  console.log(req.body, req.file);
 
   const errores = validationResult(req);
+
   if (!errores.isEmpty()) {
-    // Retornar el error al formulario con los errorres
     return res.render("admin/create", {
       values: req.body,
       errors: errores.array(),
     });
   }
 
-  if (req.file) {
-    console.log(req.file, req.file.buffer, req.file.originalname);
+  try {
+    const producto = await model.create(req.body);
+    console.log(producto);
+    if (req.file) {
+      console.log(req.file, req.file.buffer);
 
-    sharp(req.file.buffer)
-      .resize(300)
-      .toFile(
-        path.resolve(
-          __dirname,
-          "../../../public/uploads/" + req.file.originalname
-        )
-      );
+      sharp(req.file.buffer)
+        .resize(300)
+        .toFile(
+          path.resolve(
+            __dirname,
+            `../../../public/uploads/productos/_${producto.id}.jpg`
+          )
+        );
+    }
+    res.redirect("/admin/produtos");
+  } catch (error) {
+    console.log(error);
+    res.send(error);
   }
-
-  res.send("Admin Crear Producto");
 };
 
-const update = (req, res) => {
+const edit = async (req, res) => {
+  try {
+    const producto = await model.findByPk(req.params.id);
+
+    if (producto) {
+      res.render("admin/edit", { values: producto });
+    } else {
+      res.status(404).send("No existe el producto");
+    }
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+};
+
+const update = async (req, res) => {
   console.log(req.body, req.params);
-  res.send("Admin Modificar Producto");
+
+  const errores = validationResult(req);
+
+  if (!errores.isEmpty()) {
+    return res.render("admin/create", {
+      values: req.body,
+      errors: errores.array(),
+    });
+  }
+
+  try {
+    const producto = await model.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+    // console.log(producto);
+
+    if (req.file) {
+      console.log(req.file);
+
+      sharp(req.file.buffer)
+        .resize(300)
+        .toFile(
+          path.resolve(
+            __dirname,
+            `../../../public/uploads/productos/_${req.params.id}.jpg`
+          )
+        );
+    }
+    res.redirect("/admin/productos")
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
 };
 
 const destroy = (req, res) => {
@@ -68,6 +123,7 @@ module.exports = {
   show,
   create,
   store,
+  edit,
   update,
   destroy,
 };
