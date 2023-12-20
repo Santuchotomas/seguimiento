@@ -1,11 +1,12 @@
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
-    "santu_db",
-    "santu_user",
-    "Se2722pw*",
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASS,
+    
     {
-     host: "mysql-santu.alwaysdata.net",
+     host: process.env.DB_HOST,
      dialect: "mysql",
     }
 );

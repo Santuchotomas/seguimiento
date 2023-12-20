@@ -3,9 +3,8 @@ h1 {
 }
 table {
   margin: 1em 0;
-  boder-collape: collapse;
 }
-th,
-td, {
+th,td {
   border: 1px solid;
+  padding: .2em;
 }

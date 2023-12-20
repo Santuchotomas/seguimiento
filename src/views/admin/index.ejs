@@ -9,25 +9,27 @@
   <body>
     <%- include('../partials/header') %>
     <main>
-      <h1> Listado de productos</h1>
+      <h1>Listado de productos</h1>
 
-      <a href="/admin/productos/ceate"> Crear</a>
+      <a href="/admin/productos/create"> Crear</a>
       <table>
         <thead>
           <tr>
             <th>#</th>
             <th>Nombre</th>
             <th>Precio</th>
-            <th></th>
+            <th>editar | borrar</th>
           </tr>
         </thead>
         <tbody>
-          <% productos.forEach(producto => { %> 
+          <% productos.forEach(producto => { %>
+          <tr>
             <td><%= producto.id %></td>
-            <td><%= producto.nombre %</td>
-            <td><%= producto.precio %</td>
+            <td><%= producto.nombre %></td>
+            <td><%= producto.precio %></td>
             <td></td>
-            <% }) %>
+          </tr>
+          <% }) %>
         </tbody>
       </table>
     </main>

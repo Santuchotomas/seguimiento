@@ -14,7 +14,6 @@ const index = async (req, res) => {
     console.log(error);
     res.status(500).send(error);
   }
-  res.send("listado de productos");
 };
 
 const show = (req, res) => {
