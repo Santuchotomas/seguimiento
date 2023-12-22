@@ -1,3 +1,4 @@
+const fs = require("fs");
 const path = require("path");
 const sharp = require("sharp");
 
@@ -87,12 +88,12 @@ const update = async (req, res) => {
   }
 
   try {
-    const producto = await model.update(req.body, {
+    const count = await model.update(req.body, {
       where: {
         id: req.params.id,
       },
     });
-    // console.log(producto);
+    // console.log(count);
 
     if (req.file) {
       console.log(req.file);
@@ -113,9 +114,33 @@ const update = async (req, res) => {
   }
 };
 
-const destroy = (req, res) => {
+const destroy = async (req, res) => {
   console.log(req.params);
-  res.send("Admin Borrar Producto");
+
+  try {
+
+    const destroyed = await model.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    console.log(destroyed);
+    if (destroyed ==1) {
+      fs.unlink(
+        path.resolve(
+         __dirname,`../../../public/uploads/productos/producto_${req.params.id}.jpg`
+        ), (error) => {
+             if (error) {
+               console.log(error);
+             }
+           }
+       );
+    }
+    res.redirect("/admin/productos");
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
 };
 
 module.exports = {

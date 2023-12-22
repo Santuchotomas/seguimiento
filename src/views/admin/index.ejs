@@ -27,7 +27,18 @@
             <td><%= producto.id %></td>
             <td><%= producto.nombre %></td>
             <td><%= producto.precio %></td>
-            <td><a href="/admin/productos/<%= producto.id %>/edit">Editar</a>| borrar</td>
+            <td><a href="/admin/productos/<%= producto.id %>/edit">Editar</a>|
+
+              <form
+                class= "form-delete"
+                style= "display: inline-block"
+                action= "/admin/productos/<%= productos.id %>?_me            thod=DELETE"
+                method="post"
+                >
+                <button type= "submit">Borrar</button>
+              </form>
+              
+            </td>
           </tr>
           <% }) %>
         </tbody>

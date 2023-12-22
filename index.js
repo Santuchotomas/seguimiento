@@ -23,6 +23,8 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use(require("./src/routes/authRoutes"));
+
 const mainRoutes = require("./src/routes/mainRoutes");
 app.use(mainRoutes);
 
